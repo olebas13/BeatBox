@@ -20,4 +20,8 @@ public class SoundViewModel {
     public void setSound(Sound sound) {
         mSound = sound;
     }
+
+    public void onButtonClicked() {
+        mBeatBox.play(mSound);
+    }
 }
