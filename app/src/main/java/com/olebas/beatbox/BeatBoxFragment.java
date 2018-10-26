@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
 import com.olebas.beatbox.databinding.FragmentBeatBoxBinding;
 import com.olebas.beatbox.databinding.ListItemSoundBinding;
@@ -40,10 +41,37 @@ public class BeatBoxFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentBeatBoxBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_beat_box, container, false);
+        final FragmentBeatBoxBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_beat_box, container, false);
 
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         binding.recyclerView.setAdapter(new SoundAdapter(mBeatBox.getSounds()));
+        binding.seekBar.setProgress(binding.seekBar.getMax() / 2);
+        binding.playbackSpeedLabel.setText(getString(R.string.playback_speed, 100));
+
+        binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float speed;
+                if (progress < seekBar.getMax() / 2) {
+                    speed = progress * 0.01f + 0.5f;
+                    mBeatBox.setPlaybackSpeed(speed);
+                } else {
+                    speed = progress * 0.02f;
+                    mBeatBox.setPlaybackSpeed(speed);
+                }
+                binding.playbackSpeedLabel.setText(getString(R.string.playback_speed, (int)(speed * 100)));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         return binding.getRoot();
     }
