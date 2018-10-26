@@ -30,7 +30,6 @@ public class SoundViewModelTest {
     @Test
     public void callsBeatBoxPlayOnButtonClicked() {
         mSubject.onButtonClicked();
-
         verify(mBeatBox).play(mSound);
     }
 }

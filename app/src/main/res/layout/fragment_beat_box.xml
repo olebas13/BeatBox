@@ -25,7 +25,8 @@
             android:layout_height="0dp"
             android:layout_weight="1.5"
             android:orientation="vertical"
-            android:paddingTop="8dp">
+            android:paddingTop="8dp"
+            android:background="@color/red">
 
             <TextView
                 android:id="@+id/playback_speed_label"
